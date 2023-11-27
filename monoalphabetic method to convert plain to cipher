@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char alpha[] = "abcdefghijklmnopqrstuvwxyz";
+    char mono[] = "defghijklmnopqrstuvwxyzabc";
+
+    printf("Enter the string: ");
+    char input[100];
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0'; // Remove newline character from input
+    strlwr(input); // Convert input to lowercase
+
+    char encrypted[100] = "";
+	int i;
+    for ( i = 0; i < strlen(input); i++) {
+        if (isalpha(input[i])) {
+            char base = isupper(input[i]) ? 'A' : 'a';
+            int p = input[i] - base;
+            encrypted[i] = mono[p];
+        } else {
+            encrypted[i] = input[i]; // Preserve non-alphabetic characters
+        }
+    }
+
+    printf("Cipher text: %s\n", encrypted);
+
+    return 0;
+}
