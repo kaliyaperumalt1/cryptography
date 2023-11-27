@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+void encrypt(char *text, int key);
+void decrypt(char *text, int key);
+
+int main() {
+    char input[100];
+    int key;
+
+    printf("Enter the string: ");
+    fgets(input, sizeof(input), stdin);
+
+    printf("Enter the key value (0-25): ");
+    scanf("%d", &key);
+
+    encrypt(input, key);
+    printf("Cipher text: %s\n", input);
+
+    decrypt(input, key);
+    printf("Plain text: %s\n", input);
+
+    return 0;
+}
+
+void encrypt(char *text, int key) {
+	int i;
+    for (i = 0; text[i] != '\0'; i++) {
+        if (isalpha(text[i])) {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            text[i] = (text[i] - base + key) % 26 + base;
+        }
+    }
+}
+
+void decrypt(char *text, int key) {
+	int i;
+    for (i = 0; text[i] != '\0'; i++) {
+        if (isalpha(text[i])) {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            text[i] = (text[i] - base - key + 26) % 26 + base;
+        }
+    }
+}
